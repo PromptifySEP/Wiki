@@ -1,177 +1,415 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Team Promptify - Webseite</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', Arial, sans-serif;
-            background: #ffffff;
-            color: #222;
-        }
+      /* --- DESIGN SYSTEM (Variablen) --- */
+      :root {
+        --primary-dark: #290b3e;
+        --primary-light: #6a0dad;
+        --accent-teal: #0f766e;
+        --bg-color: #f4f4f9;
+        --card-bg-purple: #fdfafc;
+        --card-border-purple: #e8dff0;
+        --card-bg-teal: #f5fcfa;
+        --card-border-teal: #e0f2ef;
+        --text-main: #222222;
+        --text-muted: #555555;
+      }
 
+      /* --- GLOBAL --- */
+      body {
+        margin: 0;
+        font-family: "Poppins", Arial, sans-serif;
+        background: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+      }
+
+      a {
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+      }
+
+      /* --- HEADER (Neu: Flexbox Layout) --- */
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 30px 40px;
+        background: linear-gradient(135deg, #000000, var(--primary-light));
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        gap: 20px;
+      }
+
+      .header-logo {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .logo-badge {
+        background: #ffffff;
+        padding: 8px 16px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+      }
+
+      .logo-badge:hover {
+        transform: scale(1.02);
+      }
+
+      .logo-badge img {
+        width: 180px; /* Etwas kleiner für die linke Platzierung */
+        height: auto;
+        display: block;
+      }
+
+      .header-title {
+        flex: 2;
+        text-align: center;
+      }
+
+      .header-title h1 {
+        margin: 0 0 5px 0;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        font-size: 1.6em;
+      }
+
+      .header-title h3 {
+        margin: 0;
+        font-weight: 400;
+        opacity: 0.85;
+        font-size: 1em;
+        font-style: italic;
+      }
+
+      .header-action {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .header-btn {
+        display: inline-block;
+        background-color: #f5f0f8;
+        color: var(--primary-dark);
+        padding: 10px 24px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
+      }
+
+      .header-btn:hover {
+        background-color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      /* --- MAIN CONTENT --- */
+      main {
+        padding: 40px 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      section {
+        background: #ffffff;
+        padding: 30px 40px;
+        margin-bottom: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        border-top: 4px solid var(--primary-light);
+      }
+
+      h2 {
+        margin-top: 0;
+        margin-bottom: 25px;
+        color: var(--primary-dark);
+        font-weight: 600;
+        font-size: 1.7em;
+        border-bottom: 2px solid var(--card-border-purple);
+        padding-bottom: 10px;
+      }
+
+      h3.section-subtitle {
+        color: var(--primary-light);
+        font-weight: 500;
+        margin-top: 0;
+        margin-bottom: 20px;
+      }
+
+      /* --- VERTIKALE LISTEN-LAYOUTS --- */
+      .list-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      /* --- CARDS (Teams & Files) --- */
+      .card {
+        background: var(--card-bg-purple);
+        padding: 15px 20px;
+        border: 1px solid var(--card-border-purple);
+        border-left: 4px solid var(--primary-light);
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+      }
+
+      .card-name {
+        color: var(--primary-light);
+        font-weight: 600;
+        font-size: 1.1em;
+      }
+
+      .card-role {
+        color: #222222;
+        font-size: 0.95em;
+        background: #ffffff;
+        padding: 4px 10px;
+        border-radius: 12px;
+        border: 1px solid #eee;
+      }
+
+      .card-neutral {
+        background: #f9f9f9;
+        border: 1px dashed #ccc;
+        border-left: none;
+        text-align: center;
+        color: var(--text-muted);
+        font-style: italic;
+        justify-content: center;
+      }
+
+      .card-neutral:hover {
+        transform: none;
+        box-shadow: none;
+      }
+
+      /* --- REPORT CARDS --- */
+      .report-card {
+        display: flex;
+        align-items: center;
+        padding: 14px 20px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .report-card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+      }
+
+      .report-date {
+        font-weight: 600;
+        font-size: 1em;
+        color: var(--text-main);
+        margin-right: 15px;
+        min-width: 90px;
+      }
+
+      .report-divider {
+        color: #ccc;
+        margin-right: 15px;
+      }
+
+      .report-purple {
+        background: var(--card-bg-purple);
+        border: 1px solid var(--card-border-purple);
+        border-left: 4px solid var(--primary-light);
+      }
+      .report-purple a {
+        color: var(--primary-light);
+        font-weight: 600;
+        font-size: 1.05em;
+      }
+      .report-purple a:hover {
+        color: var(--primary-dark);
+      }
+
+      .report-teal {
+        background: var(--card-bg-teal);
+        border: 1px solid var(--card-border-teal);
+        border-left: 4px solid var(--accent-teal);
+      }
+      .report-teal a {
+        color: var(--accent-teal);
+        font-weight: 600;
+        font-size: 1.05em;
+      }
+      .report-teal a:hover {
+        color: #0a524d;
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        text-align: center;
+        padding: 25px 20px;
+        background: #ffffff;
+        margin-top: 40px;
+        font-size: 0.9em;
+        color: var(--text-muted);
+        border-top: 1px solid #eeeeee;
+      }
+
+      /* --- RESPONSIVE DESIGN --- */
+      @media (max-width: 850px) {
         header {
-            text-align: center;
-            padding: 30px 20px;
-            background: linear-gradient(135deg, #000000, #391255);
-            color: white;
+          flex-direction: column;
+          text-align: center;
+          padding: 30px 20px;
         }
-
-        header h1 {
-            margin-bottom: 10px;
-            font-weight: 600;
-            letter-spacing: 1px;
+        .header-logo,
+        .header-title,
+        .header-action {
+          justify-content: center;
+          flex: none;
         }
+        .header-title {
+          margin: 15px 0;
+        }
+      }
 
+      @media (max-width: 600px) {
         main {
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
+          padding: 20px 10px;
         }
-
         section {
-            background: #ffffff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            border-left: 4px solid #6a0dad;
+          padding: 20px;
         }
 
-        h2 {
-            margin-top: 0;
-            color: #111;
-            font-weight: 600;
+        .card {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 5px;
+        }
+        .card-role {
+          padding: 2px 8px;
+          font-size: 0.85em;
         }
 
-        h3 {
-            color: #8f5db2;
-            font-weight: 500;
+        .report-card {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 5px;
         }
-
-        ul {
-            list-style: none;
-            padding: 0;
+        .report-divider {
+          display: none;
         }
-
-        li {
-            margin: 8px 0;
-            font-weight: 300;
+        .report-date {
+          margin-bottom: 0;
         }
-
-        a {
-            color: #6a0dad;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        a:hover {
-            text-decoration: underline;
-            opacity: 0.8;
-        }
-
-        footer {
-            text-align: center;
-            padding: 15px;
-            background: #f5f5f5;
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #555;
-        }
-
-        img {
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-    
-        .jour {
-            color: #7c3aed; /* softer violet */
-            font-weight: 500;
-        }
-
-        .review {
-            color: #0f766e; /* teal accent for contrast */
-            font-weight: 600;
-        }
-
-        .main-link {
-            margin-bottom: 10px;
-        }
-
-        .main-link a {
-            font-weight: 600;
-        }
-
-        .sub-link {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-
-        .sub-link a {
-            font-weight: 400;
-        }
-
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <header>
+      <div class="header-logo">
+        <div class="logo-badge">
+          <img src="./logoPromptifyNew.png" alt="Logo von Team Promptify" />
+        </div>
+      </div>
 
-<header>
-    <h1>Team Promptify</h1>
-    <img src="teamlogo.jpg" alt="Logo von Team Promptify" style="width:200px;height:auto;">
-    <h3>SEP Sommersemester 2026</h3>
-</header>
+      <div class="header-title">
+        <h1>Willkommen auf der offiziellen Seite unseres Teams!</h1>
+        <h3>Bitte bedenken Sie, dass die Webseite noch in Bearbeitung ist.</h3>
+      </div>
 
-<main>
+      <div class="header-action">
+        <a
+          href="https://moodle.hs-mannheim.de/mod/wiki/view.php?pageid=3271"
+          class="header-btn"
+          >Zur Moodle Wiki-Seite</a
+        >
+      </div>
+    </header>
 
-    <section>
-        <h2>Unsere Teammitglieder</h2>
-        <ul>
-            <li><strong>✦ Tomas</strong> – Rolle</li>
-            <li><strong>✦ Ioana</strong> – Rolle</li>
-            <li><strong>✦ Luis</strong> – Rolle</li>
-            <li><strong>✦ Tobias</strong> – Rolle</li>
-            <li><strong>✦ Adrian</strong> – Rolle</li>
-        </ul>
-    </section>
+    <main>
+      <section>
+        <h2>Unser Team</h2>
+        <div class="list-container">
+          <div class="card">
+            <span class="card-name">Tomas Parada</span>
+            <span class="card-role">Backend</span>
+          </div>
+          <div class="card">
+            <span class="card-name">Simona-Ioana Purdila</span>
+            <span class="card-role">Frontend</span>
+          </div>
+          <div class="card">
+            <span class="card-name">Luis Däuber</span>
+            <span class="card-role">API</span>
+          </div>
+          <div class="card">
+            <span class="card-name">Tobias Gladhorn</span>
+            <span class="card-role">Documentation</span>
+          </div>
+          <div class="card">
+            <span class="card-name">Adrian Gareis</span>
+            <span class="card-role">Requirements Engineering</span>
+          </div>
+          <div class="card">
+            <span class="card-name">Eda Bostanci</span>
+            <span class="card-role">UX/UI Design</span>
+          </div>
+          <div class="card">
+            <span class="card-name">Julia Ghinda</span>
+            <span class="card-role">UX/UI Design</span>
+          </div>
+        </div>
+      </section>
 
-    <section>
-        <h2>Teamabgaben und Dateien</h2>
-        <ul>
-            <li class="main-link"><a href="bla.pdf">🗀 Zum gesamten Dateiverzeichnis</a></li>
-            <li class="sub-link"><a href="wiki.pdf">☛ Moodle Wiki-Seite</a></li>
-            <li class="sub-link"><a href="steckbrief.pdf">☛ Steckbrief</a></li>
-        </ul>
-    </section>
+      <section>
+        <h2>Über uns und das Projekt</h2>
+        <div class="list-container">
+          <div class="card card-neutral">In Bearbeitung</div>
+        </div>
+      </section>
 
-    <section>
-        <h2>Aktuelle Berichte</h2>
-        <h3 style="color: #111;">Zeitplan</h3>
-        <ul>
-            <li class="jour">▶ 15.04.2026 – Jour Fixe</li>
-            <li class="jour">▶ 22.04.2026 – Jour Fixe</li>
-            <li class="review">▶ 29.04.2026 – Review</li>
-            <li class="jour">▶ 06.05.2026 – Jour Fixe</li>
-            <li class="review">▶ 13.05.2026 – Review</li>
-            <li class="jour">▶ 20.05.2026 – Jour Fixe</li>
-            <li class="review">▶ 03.06.2026 – Review</li>
-            <li class="jour">▶ 10.06.2026 – Jour Fixe</li>
-            <li class="review">▶ 17.06.2026 – Review</li>
-            <li class="jour">▶ 24.06.2026 – Jour Fixe</li>
-        </ul>
-    </section>
+      <section>
+        <h2>Kontakt</h2>
 
-</main>
+        <div class="list-container">
+          <div class="report-card report-purple">
+            <span class="report-date">E-Mail</span>
+            <span class="report-divider">|</span>
+            <a href="mailto:sep.promptify@gmail.com">sep.promptify@gmail.com</a>
+          </div>
+          <div class="report-card report-purple">
+            <span class="report-date" style="font-style: italic"
+              >In Bearbeitung</span
+            >
+          </div>
+        </div>
+      </section>
+    </main>
 
-<footer>
-    <p>&copy; 2026 Team Promptify – Alle Rechte vorbehalten</p>
-</footer>
-
-</body>
+    <footer>
+      <p>
+        © Team Promptify Website • Technische Hochschule Mannheim •
+        Sommersemester 2026 Alle Rechte vorbehalten
+      </p>
+    </footer>
+  </body>
 </html>
