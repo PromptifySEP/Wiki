@@ -1,1 +1,1 @@
-Website ist erreichbar über https://promptifysep.github.io/Wiki/
+Website ist erreichbar über https://promptifysep.github.io/Wiki/website/
